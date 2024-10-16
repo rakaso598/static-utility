@@ -19,4 +19,4 @@ This project is a web application that provides a variety of useful tools. Built
 2. Input the desired calculation or conversion, and click the button to see the result.
 
 ### Project Link
-[View on GitHub Pages](https://rakaso598.github.io/utility-tools/)
+[View on GitHub Pages](https://rakaso598.github.io/static-utility/)
