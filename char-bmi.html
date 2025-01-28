@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text & BMI Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f4f4f9;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .tool {
+            margin-bottom: 30px;
+        }
+
+        .tool-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #333333;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        button {
+            display: inline-block;
+            padding: 10px 15px;
+            font-size: 1rem;
+            color: #ffffff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        p {
+            font-size: 1rem;
+            color: #555555;
+        }
+
+        .result {
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 글자 수 세기 -->
+        <div class="tool" id="character-counter">
+            <div class="tool-title">글자 수 세기</div>
+            <textarea id="text-input" rows="5" placeholder="텍스트를 입력하세요"></textarea>
+            <button onclick="countCharacters()">글자 수 계산</button>
+            <button onclick="resetText()">초기화</button>
+            <p id="word-count-result">공백 포함: 0 / 공백 미포함: 0</p>
+        </div>
+
+        <!-- BMI 계산기 -->
+        <div class="tool" id="bmi-calculator">
+            <div class="tool-title">BMI 계산기</div>
+            <input type="number" id="weight" placeholder="몸무게 (kg)" required>
+            <input type="number" id="height" placeholder="키 (cm)" required>
+            <button onclick="calculateBMI()">BMI 계산</button>
+            <p id="bmi-result">결과가 여기에 표시됩니다.</p>
+        </div>
+    </div>
+
+    <script>
+        // 글자 수 세기
+        function countCharacters() {
+            const text = document.getElementById("text-input").value;
+
+            // 공백을 포함한 글자 수
+            const charCountWithSpaces = text.length;
+
+            // 공백을 제외한 글자 수
+            const charCountWithoutSpaces = text.replace(/\s/g, '').length;
+
+            // 결과 출력
+            document.getElementById("word-count-result").textContent = `공백 포함: ${charCountWithSpaces} / 공백 미포함: ${charCountWithoutSpaces}`;
+        }
+
+        // 초기화 함수
+        function resetText() {
+            document.getElementById("text-input").value = "";
+            document.getElementById("word-count-result").textContent = "공백 포함: 0 / 공백 미포함: 0";
+        }
+
+        // BMI 계산 함수
+        function calculateBMI() {
+            const weight = parseFloat(document.getElementById("weight").value);
+            const height = parseFloat(document.getElementById("height").value) / 100; // cm to m
+
+            if (isNaN(weight) || isNaN(height) || height === 0) {
+                document.getElementById("bmi-result").textContent = "유효한 값을 입력하세요.";
+                return;
+            }
+
+            const bmi = (weight / (height * height)).toFixed(2);
+
+            let category = "";
+            if (bmi < 18.5) {
+                category = "저체중";
+            } else if (bmi < 24.9) {
+                category = "정상";
+            } else if (bmi < 29.9) {
+                category = "과체중";
+            } else {
+                category = "비만";
+            }
+
+            document.getElementById("bmi-result").textContent = `BMI: ${bmi} (${category})`;
+        }
+    </script>
+</body>
+</html>
